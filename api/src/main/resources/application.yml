@@ -1,0 +1,33 @@
+spring:
+  devtools:
+    restart.enabled: true
+    livereload.enabled: true
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/community?serverTimezone=UTC&characterEncoding=UTF-8
+    username: community
+    password: msqlpass
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        default_batch_fetch_size: 100
+    show-sql: true
+
+  data:
+    web:
+      pageable:
+        default-page-size: 20
+
+logging:
+  level:
+    org.hibernate:
+      sql: debug
+      type: trace
+      orm:
+        jdbc:
+          bind: trace

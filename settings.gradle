@@ -1,0 +1,5 @@
+rootProject.name = 'community'
+include 'api'
+include 'common'
+include 'view'
+
