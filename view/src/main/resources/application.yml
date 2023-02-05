@@ -10,6 +10,7 @@ spring:
     password: msqlpass
 
   jpa:
+    open-in-view: false
     hibernate:
       ddl-auto: update
     properties:
@@ -22,6 +23,11 @@ spring:
     web:
       pageable:
         default-page-size: 20
+
+  security:
+    user:
+      name: user
+      password: 1234
 
 logging:
   level:

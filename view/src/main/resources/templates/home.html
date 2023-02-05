@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/fragments :: head}">
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body class="bg-gray-300">
+
+<div class="container mx-auto">
+    <div th:replace="~{fragments/fragments :: header}"></div>
+
+    <div class="p-16 gap-8 bg-white rounded-b lg:columns-2">
+
+        <div class="mb-8 lg:mb-0 border rounded-xl shadow-lg flex-col">
+            <div class="p-6 flex">
+                <span class="text-lg font-bold flex-auto">Boards</span>
+                <a th:href="@{/boards}" class="text-slate-500 flex-none">More</a>
+            </div>
+
+            <ul role="list" class="p-6 divide-y divide-slate-200">
+                <li class="flex py-1 first:pt-0 last:pb-0" th:each="board : ${boards}">
+                    <div class="mx-3 overflow-hidden flex gap-x-3">
+                        <span class="text-sm text-slate-500 flex-none" th:text="${board.id}"></span>
+                        <a th:href="@{/boards/{id}/articles(id=${board.id})}"
+                           class="text-sm text-slate-900 hover:underline truncate flex-auto"
+                           th:text="${board.name}"></a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="border rounded-xl shadow-lg flex-col">
+            <div class="p-6 flex">
+                <span class="text-lg font-bold flex-auto">Recent Articles</span>
+                <a th:href="@{/recent-articles}" class="text-slate-500 flex-none">More</a>
+            </div>
+
+            <ul role="list" class="p-6 divide-y divide-slate-200">
+                <li class="flex py-1 first:pt-0 last:pb-0" th:each="article : ${articles}">
+                    <div class="mx-3 w-full overflow-hidden flex gap-x-3">
+                        <span class="text-sm text-slate-500 flex-none" th:text="${article.id}"></span>
+                        <a th:href="@{/boards/{boardId}/articles/{id}(boardId=${article.board.id},id=${article.id})}"
+                           class="text-sm text-slate-900 hover:underline truncate flex-auto"
+                           th:text="${article.title}"></a>
+                        <a th:href="@{/users/{userId}/articles(userId=${article.author.id})}"
+                           class="text-sm text-slate-500 hover:underline flex-none"
+                           th:text="${article.author.name}"></a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+    <div th:replace="~{fragments/fragments :: footer}"></div>
+
+</div>
+
+</body>
+</html>

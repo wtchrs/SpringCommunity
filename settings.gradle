@@ -1,5 +1,4 @@
-rootProject.name = 'community'
+rootProject.name = 'SpringCommunity'
 include 'api'
 include 'common'
 include 'view'
-

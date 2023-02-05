@@ -7,7 +7,7 @@ plugins {
 sourceCompatibility = '17'
 
 allprojects {
-    group = 'wtchrs'
+    group = 'wtchrs.SpringCommunity'
     version = '0.0.1-SNAPSHOT'
 
     repositories {
