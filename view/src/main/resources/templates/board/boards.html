@@ -7,71 +7,73 @@
     <div th:replace="~{fragments/fragments :: header}"></div>
 
     <div class="p-auto bg-white rounded-b">
-        <div class="mx-12 pb-6 flex-col">
-            <div class="p-6 flex">
-                <span class="text-lg font-bold flex-auto">Boards</span>
+        <div class="max-w-4xl px-6 pb-8 mx-auto">
+            <div class="mx-12 pb-6 flex-col">
+                <div class="p-6 flex">
+                    <span class="text-lg font-bold flex-auto">Boards</span>
+                </div>
+
+                <ul role="list" class="p-6 divide-y divide-slate-200">
+                    <li class="flex py-1 first:pt-0 last:pb-0" th:each="board : ${boards}">
+                        <div class="mx-3 overflow-hidden flex gap-x-3">
+                            <span class="text-sm text-slate-500 flex-none" th:text="${board.id}"></span>
+                            <a th:href="@{/boards/{id}/articles(id=${board.id})}"
+                               class="text-sm text-slate-900 hover:underline truncate flex-auto"
+                               th:text="${board.name}"></a>
+                            <a th:href="@{/users/{id}(id=${board.creator.id})}"
+                               class="text-sm text-slate-500 hover:underline truncate flex-auto"
+                               th:text="${board.creator.name}"></a>
+                        </div>
+                    </li>
+                </ul>
             </div>
 
-            <ul role="list" class="p-6 divide-y divide-slate-200">
-                <li class="flex py-1 first:pt-0 last:pb-0" th:each="board : ${boards}">
-                    <div class="mx-3 overflow-hidden flex gap-x-3">
-                        <span class="text-sm text-slate-500 flex-none" th:text="${board.id}"></span>
-                        <a th:href="@{/boards/{id}/articles(id=${board.id})}"
-                           class="text-sm text-slate-900 hover:underline truncate flex-auto"
-                           th:text="${board.name}"></a>
-                        <a th:href="@{/users/{id}(id=${board.creator.id})}"
-                           class="text-sm text-slate-500 hover:underline truncate flex-auto"
-                           th:text="${board.creator.name}"></a>
-                    </div>
-                </li>
-            </ul>
-        </div>
-
-        <nav class="pb-6 flex place-content-center">
-            <ul class="flex-none flex divide-x border rounded text-center"
-                th:with="start=${(boards.number/5)*5+1},
+            <nav class="pb-6 flex place-content-center">
+                <ul class="flex-none flex divide-x border rounded text-center"
+                    th:with="start=${(boards.number/5)*5+1},
                          last=(${start + 4 < boards.totalPages ? start + 4 : boards.totalPages})">
-                <li>
-                    <a th:href="@{/boards(page=1)}" aria-label="First">
-                        <button class="px-2 py-1 rounded-l hover:bg-blue-500 hover:text-slate-100">
-                            <span aria-hidden="true">First</span>
-                        </button>
-                    </a>
-                </li>
+                    <li>
+                        <a th:href="@{/boards(page=1)}" aria-label="First">
+                            <button class="px-2 py-1 rounded-l hover:bg-indigo-600 hover:text-slate-100">
+                                <span aria-hidden="true">First</span>
+                            </button>
+                        </a>
+                    </li>
 
-                <li th:if="${!boards.first}">
-                    <a th:href="@{/boards(page=${boards.number})}" aria-label="Previous">
-                        <button class="px-2 py-1 hover:bg-blue-500 hover:text-slate-100">
-                            <span aria-hidden="true">&lt;</span>
-                        </button>
-                    </a>
-                </li>
+                    <li th:if="${!boards.first}">
+                        <a th:href="@{/boards(page=${boards.number})}" aria-label="Previous">
+                            <button class="px-2 py-1 hover:bg-indigo-600 hover:text-slate-100">
+                                <span aria-hidden="true">&lt;</span>
+                            </button>
+                        </a>
+                    </li>
 
-                <li th:each="page: ${#numbers.sequence(start, last)}">
-                    <a th:href="@{/boards(page=${page})}">
-                        <button th:class="${page == boards.number + 1} ? 'px-2 py-1 bg-blue-700 text-slate-100'
-                                                                       : 'px-2 py-1 hover:bg-blue-500 hover:text-slate-100'"
-                                th:text="${page}"></button>
-                    </a>
-                </li>
+                    <li th:each="page: ${#numbers.sequence(start, last)}">
+                        <a th:href="@{/boards(page=${page})}">
+                            <button th:class="${page == boards.number + 1} ? 'px-2 py-1 bg-indigo-600 text-slate-100'
+                                                                       : 'px-2 py-1 hover:bg-indigo-600 hover:text-slate-100'"
+                                    th:text="${page}"></button>
+                        </a>
+                    </li>
 
-                <li th:if="${!boards.last}">
-                    <a th:href="@{/boards(page=${boards.number + 2})}" aria-label="Next">
-                        <button class="px-2 py-1 hover:bg-blue-500 hover:text-slate-100">
-                            <span aria-hidden="true">&gt;</span>
-                        </button>
-                    </a>
-                </li>
+                    <li th:if="${!boards.last}">
+                        <a th:href="@{/boards(page=${boards.number + 2})}" aria-label="Next">
+                            <button class="px-2 py-1 hover:bg-indigo-600 hover:text-slate-100">
+                                <span aria-hidden="true">&gt;</span>
+                            </button>
+                        </a>
+                    </li>
 
-                <li>
-                    <a th:href="@{/boards(page=${boards.totalPages})}" aria-label="Last">
-                        <button class="px-2 py-1 rounded-r hover:bg-blue-500 hover:text-slate-100">
-                            <span aria-hidden="true">Last</span>
-                        </button>
-                    </a>
-                </li>
-            </ul>
-        </nav>
+                    <li>
+                        <a th:href="@{/boards(page=${boards.totalPages})}" aria-label="Last">
+                            <button class="px-2 py-1 rounded-r hover:bg-indigo-600 hover:text-slate-100">
+                                <span aria-hidden="true">Last</span>
+                            </button>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     </div>
 
     <div th:replace="~{fragments/fragments :: footer}"></div>

@@ -42,6 +42,7 @@
                         <a th:href="@{/boards/{boardId}/articles/{id}(boardId=${article.board.id},id=${article.id})}"
                            class="text-sm text-slate-900 hover:underline truncate flex-auto"
                            th:text="${article.title}"></a>
+                        <span class="text-sm text-slate-500 flex-none" th:text="${{article.createdDate}}"></span>
                         <a th:href="@{/users/{userId}/articles(userId=${article.author.id})}"
                            class="text-sm text-slate-500 hover:underline flex-none"
                            th:text="${article.author.name}"></a>

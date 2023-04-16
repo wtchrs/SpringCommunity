@@ -1,10 +1,13 @@
-package wtchrs.SpringCommunity.common.repository;
+package wtchrs.SpringCommunity.common.entity.article;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
-import wtchrs.SpringCommunity.common.entity.Article;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import java.util.Optional;
 
 public interface ArticleRepository extends JpaRepository<Article, Long> {
 
@@ -15,4 +18,10 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
 
     @EntityGraph(attributePaths = {"author", "board"})
     Page<Article> findAllBoardsArticlesBy(Pageable pageable);
+
+    @Query("select a.board.id from Article a where a.id = :id")
+    Long findBoardIdById(@Param("id") Long articleId);
+
+    @EntityGraph(attributePaths = {"author", "board"})
+    Optional<Article> findArticleById(Long articleId);
 }

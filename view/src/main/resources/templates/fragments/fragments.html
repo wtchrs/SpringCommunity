@@ -42,19 +42,34 @@
                 <a th:href="@{#}" class="text-base font-medium text-gray-500 hover:text-gray-900">#</a>
             </nav>
 
-            <div class="hidden items-center justify-end md:flex md:flex-1 lg:w-0">
-                <a th:href="@{/sign-in}" class="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">Sign
-                    in</a>
-                <a href="#"
-                   class="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700">Sign
-                    up</a>
-            </div>
+            <div th:replace="~{:: userInfoHeader}"></div>
         </div>
     </div>
 </div>
 
+<div th:fragment="userInfoHeader" class="hidden items-center justify-end md:flex md:flex-1 lg:w-0">
+    <th:block th:if="${session.get('auth') == null}">
+        <a th:href="@{/sign-in}" class="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
+            Sign in
+        </a>
+        <a th:href="@{/sign-up}"
+           class="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700">
+            Sign up
+        </a>
+    </th:block>
+    <th:block th:if="${session.get('auth') != null}">
+        <a th:href="@{#}"
+           class="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900"
+           th:text="${session.get('auth').username}"></a>
+        <a th:href="@{/sign-out}"
+           class="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700">
+            Sign out
+        </a>
+    </th:block>
+</div>
+
 <div th:fragment="footer" class="text-center p-6">
-    <span>© 2021 </span>
+    <span>© 2023 </span>
     <a class="text-gray-600 font-semibold hover:text-gray-500" th:href="@{/}">Spring Community</a>
 </div>
 

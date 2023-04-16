@@ -1,9 +1,10 @@
-package wtchrs.SpringCommunity.common.entity;
+package wtchrs.SpringCommunity.common.entity.user;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import wtchrs.SpringCommunity.common.entity.BaseEntity;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -22,8 +23,6 @@ public class User extends BaseEntity {
     private String password;
 
     private String name;
-
-    @Column(length = 1000)
     private String description;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)

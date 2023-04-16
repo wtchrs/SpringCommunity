@@ -1,9 +1,12 @@
-package wtchrs.SpringCommunity.common.entity;
+package wtchrs.SpringCommunity.common.entity.article;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import wtchrs.SpringCommunity.common.entity.BaseEntity;
+import wtchrs.SpringCommunity.common.entity.board.Board;
+import wtchrs.SpringCommunity.common.entity.user.User;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

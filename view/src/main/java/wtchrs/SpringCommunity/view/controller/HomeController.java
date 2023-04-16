@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import wtchrs.SpringCommunity.common.service.ArticleService;
 import wtchrs.SpringCommunity.common.service.BoardService;
 
+
 @Controller
 @RequiredArgsConstructor
 public class HomeController {

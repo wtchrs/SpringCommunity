@@ -1,13 +1,12 @@
-package wtchrs.SpringCommunity.view;
+package wtchrs.SpringCommunity.view.config;
 
-import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
-import wtchrs.SpringCommunity.common.entity.Board;
-import wtchrs.SpringCommunity.common.entity.User;
-import wtchrs.SpringCommunity.common.repository.ArticleRepository;
-import wtchrs.SpringCommunity.common.repository.BoardRepository;
-import wtchrs.SpringCommunity.common.repository.UserRepository;
+import wtchrs.SpringCommunity.common.entity.article.ArticleRepository;
+import wtchrs.SpringCommunity.common.entity.board.Board;
+import wtchrs.SpringCommunity.common.entity.board.BoardRepository;
+import wtchrs.SpringCommunity.common.entity.user.User;
+import wtchrs.SpringCommunity.common.entity.user.UserRepository;
 import wtchrs.SpringCommunity.common.service.ArticleService;
 import wtchrs.SpringCommunity.common.service.BoardService;
 import wtchrs.SpringCommunity.common.service.CommentService;
@@ -36,7 +35,7 @@ public class AppConfig {
             user = findUser.get();
         } else {
             user = new User("username", "password", "hello");
-            userService.signup(user);
+            userService.signUp(user);
         }
 
         Long firstBoardId;

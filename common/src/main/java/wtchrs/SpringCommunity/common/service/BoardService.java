@@ -6,12 +6,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import wtchrs.SpringCommunity.common.entity.Board;
-import wtchrs.SpringCommunity.common.entity.BoardAdmin;
-import wtchrs.SpringCommunity.common.entity.User;
-import wtchrs.SpringCommunity.common.repository.BoardAdminRepository;
-import wtchrs.SpringCommunity.common.repository.BoardRepository;
-import wtchrs.SpringCommunity.common.repository.UserRepository;
+import wtchrs.SpringCommunity.common.entity.board.Board;
+import wtchrs.SpringCommunity.common.entity.board.BoardAdmin;
+import wtchrs.SpringCommunity.common.entity.board.BoardAdminRepository;
+import wtchrs.SpringCommunity.common.entity.board.BoardRepository;
+import wtchrs.SpringCommunity.common.entity.user.User;
+import wtchrs.SpringCommunity.common.entity.user.UserRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,12 +26,6 @@ public class BoardService {
     private final BoardAdminRepository boardAdminRepository;
     private final UserRepository userRepository;
 
-    /**
-     * @param userId    creator.
-     * @param boardName board name.
-     * @return pk value of the board instance.
-     * @throws IllegalStateException when the user id passed is not exist or the board name already exists.
-     */
     @Transactional
     public Long createBoard(Long userId, String boardName) {
         if (boardRepository.existsByName(boardName)) throw new IllegalStateException("Already exist board name");
@@ -46,17 +40,10 @@ public class BoardService {
     }
 
 
-    /**
-     * @return first page of all board.
-     */
     public Page<Board> getBoards() {
         return getBoards(PageRequest.of(0, 20));
     }
 
-    /**
-     * @param pageable page info to find.
-     * @return page of all board.
-     */
     public Page<Board> getBoards(Pageable pageable) {
         return boardRepository.findAll(pageable);
     }
@@ -65,12 +52,6 @@ public class BoardService {
         return boardRepository.findAllWithUserBy(pageable);
     }
 
-    /**
-     * @param boardId pk value of board.
-     * @param userId  pk value of user.
-     * @return pk value of BoardAdmin.
-     * @throws IllegalStateException when {@code boardId} or {@code userId} do not exist.
-     */
     @Transactional
     public Long addAdmin(Long boardId, Long userId) {
         Optional<User> findUser = userRepository.findById(userId);
@@ -89,11 +70,6 @@ public class BoardService {
         return admin.getId();
     }
 
-    /**
-     * @param boardId pk value of board.
-     * @param userId  pk value of user.
-     * @throws IllegalStateException when not exist board admin.
-     */
     @Transactional
     public void removeAdmin(Long boardId, Long userId) {
         Optional<BoardAdmin> findAdmin = boardAdminRepository.findByBoard_IdAndUser_Id(boardId, userId);
@@ -101,11 +77,6 @@ public class BoardService {
         boardAdminRepository.delete(admin);
     }
 
-    /**
-     * @param boardId pk value of board.
-     * @return list of {@link BoardAdmin}. It can be an empty list when there is no admin of the board or there is no
-     * board of the pk value.
-     */
     public List<BoardAdmin> getAdmins(Long boardId) {
         return boardAdminRepository.findBoardAdminsByBoard_Id(boardId);
     }

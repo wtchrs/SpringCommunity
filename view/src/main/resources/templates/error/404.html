@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/fragments :: head}">
+    <meta charset="UTF-8">
+    <title>404 NOT FOUND</title>
+</head>
+<body class="bg-gray-300">
+
+<div class="container mx-auto">
+    <div th:replace="~{fragments/fragments :: header}"></div>
+
+    <div class="p-16 gap-8 bg-white rounded-b">
+
+        <section class="flex items-center h-full p-16 dark:bg-gray-900 dark:text-gray-100">
+            <div class="container flex flex-col items-center justify-center px-5 mx-auto my-8">
+                <div class="max-w-md text-center">
+                    <h2 class="mb-8 font-extrabold text-9xl dark:text-gray-600">
+                        <span class="sr-only">Error</span>404
+                    </h2>
+                    <p class="text-2xl font-semibold md:text-3xl">Sorry, we couldn't find this page.</p>
+                    <p class="mt-4 mb-8 dark:text-gray-400">But don't worry, you can find plenty of other things on our homepage.</p>
+                    <a th:href="@{/}" rel="noopener noreferrer"
+                       class="px-8 py-3 font-semibold rounded bg-indigo-600 text-white dark:bg-violet-400 dark:text-gray-900">
+                        Back to homepage
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <div th:replace="~{fragments/fragments :: footer}"></div>
+
+</div>
+
+</body>
+</html>

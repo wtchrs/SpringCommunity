@@ -1,7 +1,6 @@
-package wtchrs.SpringCommunity.common.repository;
+package wtchrs.SpringCommunity.common.entity.board;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import wtchrs.SpringCommunity.common.entity.BoardAdmin;
 
 import java.util.List;
 import java.util.Optional;

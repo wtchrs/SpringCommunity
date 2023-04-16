@@ -17,23 +17,16 @@ spring:
       hibernate:
         format_sql: true
         default_batch_fetch_size: 100
-    show-sql: true
 
   data:
     web:
       pageable:
         default-page-size: 20
-
-  security:
-    user:
-      name: user
-      password: 1234
+  messages:
+    basename: messages,errors
 
 logging:
   level:
-    org.hibernate:
-      sql: debug
-      type: trace
-      orm:
-        jdbc:
-          bind: trace
+    root: info
+    sql: debug
+    org.hibernate.orm.jdbc.bind: trace
