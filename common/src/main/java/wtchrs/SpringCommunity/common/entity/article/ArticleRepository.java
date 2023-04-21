@@ -22,6 +22,6 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
     @Query("select a.board.id from Article a where a.id = :id")
     Long findBoardIdById(@Param("id") Long articleId);
 
-    @EntityGraph(attributePaths = {"author", "board"})
+    @EntityGraph(attributePaths = {"author", "board", "images"})
     Optional<Article> findArticleById(Long articleId);
 }

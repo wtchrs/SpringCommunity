@@ -14,7 +14,7 @@
             <div class="mx-12 pb-6 flex-col">
                 <div class="p-6 flex">
                     <span class="text-lg font-bold flex-auto" th:text="${board.name}"></span>
-                    <a th:href="@{#}"
+                    <a th:href="@{/boards/{boardId}/articles/write(boardId=${board.id})}"
                        class="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-indigo-600 px-4 py-1 text-base font-medium text-white shadow-sm hover:bg-indigo-700">
                         Write
                     </a>

@@ -5,7 +5,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.format.Formatter;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import wtchrs.SpringCommunity.view.interceptor.CommonAttributeInterceptor;
 
 import java.text.ParseException;
 import java.time.LocalDateTime;
@@ -17,6 +19,11 @@ import java.util.Locale;
 public class WebConfig implements WebMvcConfigurer {
 
     private final LocalDateTimeFormatter formatter;
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new CommonAttributeInterceptor());
+    }
 
     @Override
     public void addFormatters(FormatterRegistry registry) {

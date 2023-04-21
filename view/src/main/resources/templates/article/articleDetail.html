@@ -16,6 +16,7 @@
                 <a th:href="@{/boards/{boardId}/articles(boardId=${article.board.id})}"
                    th:text="${article.board.name}"></a>
             </h2>
+
             <article class="space-y-8 dark:bg-gray-800 dark:text-gray-50 divide-y">
                 <div class="space-y-6">
                     <h1 class="text-4xl font-bold md:tracking-tight md:text-5xl" th:text="${article.title}">Title</h1>
@@ -31,10 +32,22 @@
                         </p>
                     </div>
                 </div>
-                <div class="pt-6 dark:text-gray-100" th:text="${article.content}">
-                    <p>Insert the actual text content here...</p>
+
+                <div>
+                    <div class="pt-6 dark:text-gray-100" th:text="${article.content}">
+                        <p>Insert the actual text content here...</p>
+                    </div>
+
+                    <!-- TODO: show article images -->
+                    <div class="pt-6 flex-col">
+                        <img th:each="image : ${article.images}"
+                             th:src="@{/images/{stored}/{original}(stored=${image.storedFilename},original=${image.originalFilename})}"
+                             th:alt="${image.originalFilename}"
+                             class="h-auto max-w-full rounded">
+                    </div>
                 </div>
             </article>
+
             <div>
                 <div class="space-y-2">
                     <!-- TODO -->

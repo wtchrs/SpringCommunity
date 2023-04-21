@@ -6,7 +6,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import wtchrs.SpringCommunity.common.entity.BaseEntity;
 import wtchrs.SpringCommunity.common.entity.board.Board;
+import wtchrs.SpringCommunity.common.entity.image.ImageContent;
 import wtchrs.SpringCommunity.common.entity.user.User;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -29,6 +33,9 @@ public class Article extends BaseEntity {
 
     @Lob
     private String content;
+
+    @OneToMany(mappedBy = "article")
+    private List<ImageContent> images = new ArrayList<>();
 
     private int viewCount;
 

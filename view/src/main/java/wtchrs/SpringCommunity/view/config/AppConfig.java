@@ -1,5 +1,6 @@
 package wtchrs.SpringCommunity.view.config;
 
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import wtchrs.SpringCommunity.common.entity.article.ArticleRepository;
@@ -27,7 +28,7 @@ public class AppConfig {
     private final ArticleService articleService;
     private final CommentService commentService;
 
-//    @PostConstruct
+    @PostConstruct
     public void createInitialData() {
         Optional<User> findUser = userRepository.findByUsername("username");
         User user;
@@ -40,7 +41,7 @@ public class AppConfig {
 
         Long firstBoardId;
 
-        for (int i = 0; i < 200; i++) {
+        for (int i = 0; i < 20; i++) {
             String boardName = "board_" + i;
             if (!boardRepository.existsByName(boardName)) {
                 boardService.createBoard(user.getId(), boardName);
@@ -58,14 +59,14 @@ public class AppConfig {
             articleService.post(user.getId(), firstBoardId,
                                 "Test title length Test title length Test title length Test title length Test title length title length title length title length title length",
                                 "content");
-            for (int i = 0; i < 200; i++) {
+            for (int i = 0; i < 20; i++) {
                 articleService.post(user.getId(), firstBoardId, "article_" + i, "content");
             }
 
             commentService.comment(user.getId(), articleId, "And this is the first comment.");
             commentService.comment(user.getId(), articleId, "second comment");
 
-            for (int i = 0; i < 200; i++) {
+            for (int i = 0; i < 20; i++) {
                 commentService.comment(user.getId(), articleId, "comment_" + i);
             }
         }

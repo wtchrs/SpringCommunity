@@ -14,6 +14,8 @@ import java.util.List;
 @Getter
 public class User extends BaseEntity {
 
+    // TODO: add profile image.
+
     @Id @GeneratedValue
     @Column(name = "user_id")
     private Long id;

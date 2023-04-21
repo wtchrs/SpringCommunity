@@ -16,7 +16,6 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final NameHistoryRepository nameHistoryRepository;
-    private final ProfileImageRepository profileImageRepository;
 
     private final BoardAdminRepository boardAdminRepository;
 

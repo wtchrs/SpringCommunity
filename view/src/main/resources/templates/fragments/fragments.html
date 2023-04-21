@@ -49,7 +49,7 @@
 
 <div th:fragment="userInfoHeader" class="hidden items-center justify-end md:flex md:flex-1 lg:w-0">
     <th:block th:if="${session.get('auth') == null}">
-        <a th:href="@{/sign-in}" class="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
+        <a th:href="@{/sign-in(redirectUrl=${requestUri})}" class="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
             Sign in
         </a>
         <a th:href="@{/sign-up}"
@@ -60,7 +60,7 @@
     <th:block th:if="${session.get('auth') != null}">
         <a th:href="@{#}"
            class="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900"
-           th:text="${session.get('auth').username}"></a>
+           th:text="'Hello, ' + ${session.get('auth').username} + '!'"></a>
         <a th:href="@{/sign-out}"
            class="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700">
             Sign out

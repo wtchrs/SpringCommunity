@@ -15,8 +15,9 @@ public class BoardResponse {
     private final LocalDateTime createdDate;
     private final LocalDateTime lastModifiedDate;
 
-    public BoardResponse(Long id, String name, String creatorName, LocalDateTime createdDate,
-                         LocalDateTime lastModifiedDate) {
+    public BoardResponse(
+            Long id, String name, String creatorName, LocalDateTime createdDate, LocalDateTime lastModifiedDate) {
+
         this.id = id;
         this.name = name;
         this.creatorName = creatorName;

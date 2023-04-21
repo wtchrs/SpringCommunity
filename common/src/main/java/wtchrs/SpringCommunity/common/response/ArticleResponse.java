@@ -27,8 +27,10 @@ public class ArticleResponse {
     private final LocalDateTime lastModifiedDate;
 
     @Builder
-    public ArticleResponse(Long id, Long boardId, String boardName, Long authorId, String authorUsername, String title,
-                           String content, int viewCount, LocalDateTime createdDate, LocalDateTime lastModifiedDate) {
+    public ArticleResponse(
+            Long id, Long boardId, String boardName, Long authorId, String authorUsername, String title, String content,
+            int viewCount, LocalDateTime createdDate, LocalDateTime lastModifiedDate) {
+
         this.id = id;
         this.boardId = boardId;
         this.boardName = boardName;
@@ -46,11 +48,11 @@ public class ArticleResponse {
         User author = article.getAuthor();
 
         return ArticleResponse
-            .builder().id(article.getId())
-            .boardId(board.getId()).boardName(board.getName())
-            .authorId(author.getId()).authorUsername(author.getUsername())
-            .title(article.getTitle()).content(article.getContent()).viewCount(article.getViewCount())
-            .createdDate(article.getCreatedDate()).lastModifiedDate(article.getLastModifiedDate())
-            .build();
+                .builder().id(article.getId())
+                .boardId(board.getId()).boardName(board.getName())
+                .authorId(author.getId()).authorUsername(author.getUsername())
+                .title(article.getTitle()).content(article.getContent()).viewCount(article.getViewCount())
+                .createdDate(article.getCreatedDate()).lastModifiedDate(article.getLastModifiedDate())
+                .build();
     }
 }
