@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/fragments :: head}">
+    <meta charset="UTF-8">
+    <title th:text="${article.title}">Title</title>
+</head>
+<body class="bg-gray-300">
+
+<div class="container mx-auto">
+    <div th:replace="~{fragments/fragments :: header}"></div>
+
+    <div class="py-16 bg-white rounded-b">
+
+        <div class="max-w-2xl px-6 pb-8 mx-auto space-y-12">
+            <h2 class="text-2xl font-bold md:tracking-tight hover:underline">
+                <a th:href="@{/boards/{boardId}/articles(boardId=${article.board.id})}"
+                   th:text="${article.board.name}"></a>
+            </h2>
+
+            <article class="space-y-8 dark:bg-gray-800 dark:text-gray-50 divide-y">
+                <div class="space-y-6">
+
+                    <h1 class="text-4xl font-bold md:tracking-tight md:text-5xl" th:text="${article.title}">
+                        Title
+                    </h1>
+                    <div class="flex flex-col items-start justify-between w-full md:flex-row md:items-center dark:text-gray-400">
+                        <div class="flex items-center md:space-x-2">
+                            <p class="text-sm">
+                                <span th:text="${article.author.name}">Author</span>
+                                • <span th:text="${{article.createdDate}}">yyyy-MM-dd HH:mm</span>
+                            </p>
+                        </div>
+                        <p class="flex-shrink-0 mt-3 text-sm md:mt-0">
+                            <span th:text="${article.viewCount}"></span> views
+                            <span class="text-gray-500" th:if="${session.get('auth')?.id == article.author.id}">
+                                • <a class="hover:underline" th:href="@{#}">edit</a>
+                                <a class="hover:underline" th:href="@{#}">delete</a>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="pt-6 dark:text-gray-100" th:text="${article.content}">
+                        <p>Insert the actual text content here...</p>
+                    </div>
+
+                    <!-- TODO: show article images -->
+                    <div class="pt-6 flex-col">
+                        <img th:each="imageUrl : ${imageUrls}"
+                             th:src="@{/{url}(url=${imageUrl.substring(1)})}"
+                             class="h-auto max-w-full rounded">
+                    </div>
+                </div>
+            </article>
+
+            <div>
+                <div class="space-y-2">
+                    <!-- TODO -->
+                    <div class="flex flex-col justify-between">
+                        <h4>
+                            <span class="text-lg font-semibold" th:text="${article.board.name}"></span>
+                            <span class="text-md">Recent Article</span>
+                        </h4>
+                        <a th:href="@{/boards/{boardId}/articles(boardId=${article.board.id})}"
+                           class="text-slate-500 flex-none">more</a>
+                    </div>
+
+                    <ul role="list" class="pt-3 divide-y divide-slate-200">
+                        <li class="flex py-1 first:pt-0 last:pb-0" th:each="article : ${articles}">
+                            <div class="mx-3 w-full overflow-hidden flex gap-x-3">
+                                <span class="text-sm text-slate-500 flex-none" th:text="${article.id}"></span>
+                                <a th:href="@{/boards/{boardId}/articles/{articleId}(boardId=${article.board.id},articleId=${article.id})}"
+                                   class="text-sm text-slate-900 hover:underline truncate flex-auto"
+                                   th:text="${article.title}"></a>
+                                <span class="text-sm text-slate-500 flex-none"
+                                      th:text="${{article.createdDate}}"></span>
+                                <a th:href="@{/users/{id}(id=${article.author.id})}"
+                                   class="text-sm text-slate-500 hover:underline truncate flex-none"
+                                   th:text="${article.author.name}"></a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div th:replace="~{fragments/fragments :: footer}"></div>
+
+</div>
+
+</body>
+</html>
