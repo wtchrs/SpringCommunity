@@ -15,7 +15,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -48,17 +47,15 @@ public class ImageStoreService {
 
     @Transactional
     public List<ImageContent> storeArticleImages(Long articleId, List<MultipartFile> images) {
-        Optional<Article> findArticle = articleRepository.findArticleById(articleId);
-        Article article = findArticle.orElseThrow(() -> new IllegalStateException("Not exist article id"));
-
+        Article article = articleRepository.findArticleById(articleId)
+                .orElseThrow(() -> new IllegalStateException("Not exist article id"));
         return images.stream().map(image -> storeArticleImageProcess(article, image)).toList();
     }
 
     @Transactional
     public ImageContent storeArticleImage(Long articleId, MultipartFile image) {
-        Optional<Article> findArticle = articleRepository.findArticleById(articleId);
-        Article article = findArticle.orElseThrow(() -> new IllegalStateException("Not exist article id"));
-
+        Article article = articleRepository.findArticleById(articleId)
+                .orElseThrow(() -> new IllegalStateException("Not exist article id"));
         return storeArticleImageProcess(article, image);
     }
 

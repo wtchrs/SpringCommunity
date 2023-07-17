@@ -4,28 +4,32 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import wtchrs.SpringCommunity.entity.BaseEntity;
+import org.springframework.security.core.GrantedAuthority;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class NameHistory extends BaseEntity {
+public class Authority implements GrantedAuthority {
 
     @Id
     @GeneratedValue
-    @Column(name = "history_id")
+    @Column(name = "authority_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(length = 25)
-    private String history;
+    private String name;
 
-    public NameHistory(User user, String history) {
+    public Authority(User user, String name) {
         this.user = user;
-        this.history = history;
+        this.name = name;
+    }
+
+    @Override
+    public String getAuthority() {
+        return name;
     }
 
 }

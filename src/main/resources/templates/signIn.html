@@ -13,7 +13,7 @@
     <div class="p-16 bg-white rounded-b">
         <div class="mx-auto my-16 border rounded-lg shadow-lg w-full max-w-xs">
             <!--<form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">-->
-            <form class="px-8 pt-6 pb-8 mb-4" method="post" th:object="${signInRequest}">
+            <form class="px-8 pt-6 pb-8 mb-4" th:action method="post" th:object="${signInRequest}">
                 <div th:if="${#fields.hasGlobalErrors()}">
                     <p class="text-red-500 text-xs italic" th:each="error : ${#fields.globalErrors()}"
                        th:text="${error}"></p>

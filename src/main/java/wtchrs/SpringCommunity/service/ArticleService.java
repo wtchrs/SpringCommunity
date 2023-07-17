@@ -3,9 +3,11 @@ package wtchrs.SpringCommunity.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 import wtchrs.SpringCommunity.entity.article.Article;
 import wtchrs.SpringCommunity.entity.article.ArticleRepository;
 import wtchrs.SpringCommunity.entity.board.Board;
@@ -48,7 +50,7 @@ public class ArticleService {
 
     @Transactional
     public void editArticle(Long articleId, String title, String content) {
-        // TODO: delete existing image and add new image.
+        // TODO: edit images(add, remove)
 
         Optional<Article> findArticle = articleRepository.findById(articleId);
         Article article = findArticle.orElseThrow(() -> new IllegalStateException("Not exist article id"));
@@ -70,6 +72,16 @@ public class ArticleService {
 
     public Long getBoardIdFromArticle(Long articleId) {
         return articleRepository.findBoardIdById(articleId);
+    }
+
+    @Transactional
+    public void deleteArticle(Long articleId, User user) {
+        Article article = articleRepository.findById(articleId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        if (!article.getAuthor().getId().equals(user.getId())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
+        articleRepository.delete(article);
     }
 
     @Transactional

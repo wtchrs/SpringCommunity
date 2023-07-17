@@ -32,9 +32,11 @@
                         </div>
                         <p class="flex-shrink-0 mt-3 text-sm md:mt-0">
                             <span th:text="${article.viewCount}"></span> views
-                            <span class="text-gray-500" th:if="${session.get('auth')?.id == article.author.id}">
-                                • <a class="hover:underline" th:href="@{#}">edit</a>
-                                <a class="hover:underline" th:href="@{#}">delete</a>
+                            <span class="text-gray-500" th:if="${#authentication.principal == article.author.id}">
+                                •<a th:href="@{/boards/{boardId}/articles/{articleId}/edit (boardId=${article.board.id}, articleId=${article.id})}"
+                                    class="hover:underline">edit</a>
+                                <a th:href="@{/boards/{boardId}/articles/{articleId}/delete (boardId=${article.board.id}, articleId=${article.id})}"
+                                   class="hover:underline">delete</a>
                             </span>
                         </p>
                     </div>

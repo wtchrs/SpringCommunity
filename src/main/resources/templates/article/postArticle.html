@@ -11,7 +11,7 @@
 
     <div class="p-auto bg-white rounded-b">
         <div class="max-w-4xl px-6 pb-8 mx-auto">
-            <form th:object="${article}" method="post" enctype="multipart/form-data" class="mx-12 pb-6 flex-col">
+            <form th:object="${article}" th:action method="post" enctype="multipart/form-data" class="mx-12 pb-6 flex-col">
                 <div class="p-6 flex">
                     <span class="text-lg font-bold flex-auto" th:text="${board.name}"></span>
                     <a th:href="@{/boards/{boardId}/articles(boardId=${board.id})}"
@@ -46,8 +46,8 @@
                     <div class="mb-6">
                         <label class="block text-gray-700 text-sm font-bold mb-2" th:for="images">Add Images</label>
                         <input class="py-2 px-3 w-full text-sm text-gray-900 rounded border border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
-                               th:field="*{images}" type="file" multiple="multiple" placeholder="Images">
-                        <p class="text-red-500 text-xs italic" th:errors="*{images}"></p>
+                               th:field="${images}" type="file" multiple="multiple" placeholder="Images">
+                        <p class="text-red-500 text-xs italic" th:errors="${images}"></p>
                     </div>
                 </div>
             </form>
