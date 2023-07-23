@@ -33,6 +33,7 @@ public class JpaUserDetailsManager implements UserDetailsManager {
     @Transactional
     public void createUser(UserDetails userDetails) {
         User user = (User) userDetails;
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         if (userRepository.existsByUsername(userDetails.getUsername())) {
             throw new IllegalStateException("Already exist username");
         }

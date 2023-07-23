@@ -1,12 +1,11 @@
 package wtchrs.SpringCommunity.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-import wtchrs.SpringCommunity.entity.article.Article;
-import wtchrs.SpringCommunity.entity.article.ArticleRepository;
 import wtchrs.SpringCommunity.entity.image.ImageContent;
 import wtchrs.SpringCommunity.entity.image.ImageContentRepository;
 
@@ -14,69 +13,71 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
-import java.util.UUID;
+import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ImageStoreService {
 
+    public static final String RESIZED_IMAGE_NAME_POSTFIX = "-720";
+
+    public static final String IMAGE_URL_PREFIX = "/image/";
+
     private final ImageContentRepository imageContentRepository;
-    private final ArticleRepository articleRepository;
 
     private final ImageResizeService imageResizeService;
 
     @Value("${file.image.dir}")
     private String imageDir;
 
-    @Value("${file.image.resized-image-postfix}")
-    private String postfix;
+    @Value("${file.image.filename.length}")
+    private int filenameLength;
 
-    public String getFullPath(String filename) {
+    private String getFullPath(String filename) {
         return imageDir + filename;
     }
 
     public String getResizedImageUrl(ImageContent image) {
-        String url = "/images/" + image.getStoredFilename() + "/" + image.getOriginalFilename();
-        if (image.isResized()) {
-            int extPos = url.lastIndexOf(".");
-            url = url.substring(0, extPos) + postfix + ".jpg";
+        return IMAGE_URL_PREFIX + getFilename(image, true);
+    }
+
+    public String getFilename(ImageContent image, boolean resized) {
+        if (resized) {
+            return image.getName() + RESIZED_IMAGE_NAME_POSTFIX + ".jpg";
+        } else {
+            return image.getName() + "." + image.getExtension();
         }
-        return url;
     }
 
     @Transactional
-    public List<ImageContent> storeArticleImages(Long articleId, List<MultipartFile> images) {
-        Article article = articleRepository.findArticleById(articleId)
-                .orElseThrow(() -> new IllegalStateException("Not exist article id"));
-        return images.stream().map(image -> storeArticleImageProcess(article, image)).toList();
-    }
-
-    @Transactional
-    public ImageContent storeArticleImage(Long articleId, MultipartFile image) {
-        Article article = articleRepository.findArticleById(articleId)
-                .orElseThrow(() -> new IllegalStateException("Not exist article id"));
-        return storeArticleImageProcess(article, image);
-    }
-
-    private ImageContent storeArticleImageProcess(Article article, MultipartFile image) {
+    public ImageContent storeImage(MultipartFile image, String articleToken) {
         String originalFilename = image.getOriginalFilename();
-        if (originalFilename == null) return null;
+        if (originalFilename == null) throw new IllegalArgumentException();
 
-        String storedFilename = UUID.randomUUID().toString();
+        String randomName = createRandomString();
         String ext = originalFilename.substring(originalFilename.lastIndexOf('.') + 1);
-        boolean resized = false;
+
         try {
             BufferedImage originalImage = ImageIO.read(image.getInputStream());
             BufferedImage resizedImage = imageResizeService.resize(originalImage);
-            if (!resizedImage.equals(originalImage)) {
-                ImageIO.write(resizedImage, "jpg", new File(getFullPath(storedFilename + postfix)));
-                resized = true;
-            }
-            ImageIO.write(originalImage, "jpg", new File(getFullPath(storedFilename)));
+            ImageIO.write(originalImage, ext, new File(getFullPath(randomName + "." + ext)));
+            ImageIO.write(resizedImage, "jpg", new File(getFullPath(randomName + RESIZED_IMAGE_NAME_POSTFIX + ".jpg")));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return imageContentRepository.save(new ImageContent(article, originalFilename, storedFilename, ext, resized));
+
+        return imageContentRepository.save(new ImageContent(randomName, ext, articleToken));
     }
+
+    private String createRandomString() {
+        int leftLimit = '0';
+        int rightLimit = 'z';
+        return new Random().ints(leftLimit, rightLimit + 1)
+                .filter(Character::isLetterOrDigit)
+                .limit(filenameLength)
+                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                .toString();
+    }
+
 }

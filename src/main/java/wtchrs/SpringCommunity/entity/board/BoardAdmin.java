@@ -12,7 +12,8 @@ import wtchrs.SpringCommunity.entity.user.User;
 @Getter
 public class BoardAdmin extends BaseEntity {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "board_admin_id")
     private Long id;
 
@@ -34,4 +35,5 @@ public class BoardAdmin extends BaseEntity {
     public void accept() {
         this.accepted = true;
     }
+
 }

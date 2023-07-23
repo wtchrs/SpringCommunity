@@ -27,13 +27,13 @@ public class BoardService {
     private final UserRepository userRepository;
 
     @Transactional
-    public Long createBoard(Long userId, String boardName) {
+    public Long createBoard(Long userId, String boardName, String description) {
         if (boardRepository.existsByName(boardName)) throw new IllegalStateException("Already exist board name");
 
         Optional<User> findUser = userRepository.findById(userId);
         User user = findUser.orElseThrow(() -> new IllegalStateException("Not exist user id"));
 
-        Board board = new Board(boardName, user);
+        Board board = new Board(boardName, user, description);
         boardRepository.save(board);
 
         return board.getId();

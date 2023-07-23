@@ -42,17 +42,8 @@
                     </div>
                 </div>
 
-                <div>
-                    <div class="pt-6 dark:text-gray-100" th:text="${article.content}">
-                        <p>Insert the actual text content here...</p>
-                    </div>
-
-                    <!-- TODO: show article images -->
-                    <div class="pt-6 flex-col">
-                        <img th:each="imageUrl : ${imageUrls}"
-                             th:src="@{/{url}(url=${imageUrl.substring(1)})}"
-                             class="h-auto max-w-full rounded">
-                    </div>
+                <div class="pt-6 dark:text-gray-100" th:utext="${article.content}">
+                    <p>Insert the actual text content here...</p>
                 </div>
             </article>
 

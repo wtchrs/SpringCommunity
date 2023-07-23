@@ -29,6 +29,7 @@ public class User extends BaseEntity implements UserDetails {
 
     private String name;
 
+    @Lob
     private String description;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)

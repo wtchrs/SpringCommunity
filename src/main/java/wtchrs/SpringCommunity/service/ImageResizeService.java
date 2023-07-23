@@ -1,6 +1,5 @@
 package wtchrs.SpringCommunity.service;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.awt.*;
@@ -9,8 +8,7 @@ import java.awt.image.BufferedImage;
 @Service
 public class ImageResizeService {
 
-    @Value("${file.image.size}")
-    private int MAX_IMAGE_SIZE;
+    public static final int MAX_IMAGE_SIZE = 720;
 
     public BufferedImage resize(BufferedImage image) {
         if (image.getWidth() <= MAX_IMAGE_SIZE && image.getHeight() <= MAX_IMAGE_SIZE) return image;
@@ -25,4 +23,5 @@ public class ImageResizeService {
         resultImage.getGraphics().drawImage(scaledImage, 0, 0, null);
         return resultImage;
     }
+
 }

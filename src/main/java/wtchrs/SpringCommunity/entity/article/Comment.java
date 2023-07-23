@@ -12,7 +12,8 @@ import wtchrs.SpringCommunity.entity.user.User;
 @Getter
 public class Comment extends BaseEntity {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "comment_id")
     private Long id;
 
@@ -32,4 +33,5 @@ public class Comment extends BaseEntity {
         this.article = article;
         this.content = content;
     }
+
 }

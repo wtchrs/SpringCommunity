@@ -15,7 +15,6 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, JpaAuthProvider jpaAuthProvider)
             throws Exception {
-
         http.authenticationProvider(jpaAuthProvider);
         http.formLogin(form -> form
                 .loginPage("/sign-in")
@@ -25,8 +24,10 @@ public class SecurityConfig {
         );
         http.logout(logout -> logout.logoutUrl("/sign-out"));
         http.authorizeHttpRequests(auth -> auth
+                .requestMatchers("/boards/create").authenticated()
                 .requestMatchers("/boards/*/articles/write").authenticated()
                 .requestMatchers("/boards/*/articles/*/delete").authenticated()
+                .requestMatchers("/api/images/upload").authenticated()
                 .anyRequest().permitAll()
         );
         return http.build();

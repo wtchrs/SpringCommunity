@@ -17,4 +17,5 @@ public class ProfileImage extends BaseEntity {
     private ImageContent imageContent;
 
     // TODO: Factory method or constructor: create a ProfileImage instance out of the image file.
+
 }

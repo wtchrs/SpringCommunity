@@ -15,4 +15,5 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
 
     @EntityGraph(attributePaths = {"creator"})
     Page<Board> findAllWithUserBy(Pageable pageable);
+
 }

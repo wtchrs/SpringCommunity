@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/fragments :: head}">
+    <meta charset="UTF-8">
+    <title>Create new board</title>
+</head>
+<body class="bg-gray-300">
+
+<div class="container mx-auto">
+    <div th:replace="~{fragments/fragments :: header}"></div>
+
+    <div class="p-auto bg-white rounded-b">
+        <div class="max-w-4xl px-6 pb-8 mx-auto">
+            <form id="form" th:object="${boardCreate}" th:action method="post" class="mx-12 pb-6 flex-col">
+                <div class="p-6 flex">
+                    <span class="text-lg font-bold flex-auto">Create board</span>
+                    <a th:href="@{/boards}"
+                       class="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-indigo-600 px-4 py-1 text-base font-medium text-white shadow-sm hover:bg-indigo-700">
+                        Cancel
+                    </a>
+                    <input type="submit" value="create"
+                           class="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-indigo-600 px-4 py-1 text-base font-medium text-white shadow-sm hover:bg-indigo-700">
+                </div>
+
+                <div class="p-6">
+                    <div th:if="${#fields.hasGlobalErrors()}">
+                        <p class="text-red-500 text-xs italic" th:each="error : ${#fields.globalErrors()}"
+                           th:text="${error}"></p>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" th:for="name">Name</label>
+                        <input class="py-2 px-3 w-full text-sm text-gray-900 rounded border border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+                               th:field="*{name}" type="text" placeholder="Board name">
+                        <p class="text-red-500 text-xs italic" th:errors="*{name}"></p>
+                    </div>
+
+                    <div class="mb-6">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" th:for="description">Description</label>
+                        <textarea
+                                class="resize-none py-2 px-3 w-full text-sm text-gray-900 rounded border border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+                                th:field="*{description}" rows="20" placeholder="Description of this board"></textarea>
+                        <p class="text-red-500 text-xs italic" th:errors="*{description}"></p>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div th:replace="~{fragments/fragments :: footer}"></div>
+
+</div>
+
+</body>
+</html>

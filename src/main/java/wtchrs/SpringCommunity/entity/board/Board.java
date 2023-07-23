@@ -12,7 +12,8 @@ import wtchrs.SpringCommunity.entity.user.User;
 @Getter
 public class Board extends BaseEntity {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "board_id")
     private Long id;
 
@@ -23,8 +24,13 @@ public class Board extends BaseEntity {
     @JoinColumn(name = "user_id", updatable = false)
     private User creator;
 
-    public Board(String name, User creator) {
+    @Lob
+    private String description;
+
+    public Board(String name, User creator, String description) {
         this.name = name;
         this.creator = creator;
+        this.description = description;
     }
+
 }

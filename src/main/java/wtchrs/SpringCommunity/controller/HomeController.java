@@ -15,6 +15,7 @@ import wtchrs.SpringCommunity.service.BoardService;
 public class HomeController {
 
     private final BoardService boardService;
+
     private final ArticleService articleService;
 
     @GetMapping("/")
@@ -22,7 +23,6 @@ public class HomeController {
         model.addAttribute("boards", boardService.getBoards());
         PageRequest articlePageRequest = PageRequest.of(0, 20, Sort.by(Sort.Direction.DESC, "createdDate"));
         model.addAttribute("articles", articleService.getAllBoardsArticles(articlePageRequest));
-
         return "home";
     }
 }

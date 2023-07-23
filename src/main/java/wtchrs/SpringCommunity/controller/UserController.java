@@ -7,8 +7,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import wtchrs.SpringCommunity.request.SignInRequest;
-import wtchrs.SpringCommunity.request.SignUpRequest;
+import wtchrs.SpringCommunity.controller.request.SignInRequest;
+import wtchrs.SpringCommunity.controller.request.SignUpRequest;
 import wtchrs.SpringCommunity.service.JpaUserDetailsManager;
 
 @Controller
@@ -19,6 +19,7 @@ public class UserController {
 
     @GetMapping("/sign-in")
     public String signIn(@ModelAttribute("signInRequest") SignInRequest signInRequest) {
+        // TODO: add error message when failed sign in.
         return "signIn";
     }
 
@@ -30,7 +31,7 @@ public class UserController {
     @PostMapping("/sign-up")
     public String signUpProcess(
             @Validated @ModelAttribute("signUpRequest") SignUpRequest signUpRequest, BindingResult bindingResult) {
-
+        if (!signUpRequest.confirmPassword()) bindingResult.rejectValue("confirm", "notMatched");
         if (bindingResult.hasErrors()) return "signUp";
         userDetailsManager.createUser(signUpRequest.toUser());
         return "redirect:/sign-in";

@@ -6,20 +6,20 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import wtchrs.SpringCommunity.entity.BaseEntity;
 import wtchrs.SpringCommunity.entity.board.Board;
-import wtchrs.SpringCommunity.entity.image.ImageContent;
 import wtchrs.SpringCommunity.entity.user.User;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class Article extends BaseEntity {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "article_id")
     private Long id;
+
+    @Column(updatable = false)
+    private String articleToken;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", updatable = false)
@@ -32,18 +32,17 @@ public class Article extends BaseEntity {
     private String title;
 
     @Lob
+    @Column(columnDefinition = "TEXT")
     private String content;
-
-    @OneToMany(mappedBy = "article")
-    private List<ImageContent> images = new ArrayList<>();
 
     private int viewCount;
 
-    public Article(User author, Board board, String title, String content) {
+    public Article(User author, Board board, String title, String content, String articleToken) {
         this.author = author;
         this.board = board;
         this.title = title;
         this.content = content;
+        this.articleToken = articleToken;
     }
 
     public void editArticle(String title, String content) {
@@ -54,4 +53,5 @@ public class Article extends BaseEntity {
     public void increaseViewCount() {
         this.viewCount++;
     }
+
 }
